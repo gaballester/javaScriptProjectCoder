@@ -4,10 +4,10 @@ class Cart {
     readLocalStorage() {
         let productsLS
         productsLS = this.obtainProductsLocalStorage()
-        
+
         productsLS.forEach(function (product) {
             // build template
-            const row = document.createElement('tr')
+                  const row = document.createElement('tr')
             row.innerHTML = `
                     <td>
                         <img src="${product.image}" width=100>
@@ -23,6 +23,7 @@ class Cart {
         }
         )
         document.getElementById("CartCount").innerHTML = productsLS.length
+        this.showTotalAmount()
     }
    
     // delete product
@@ -33,11 +34,13 @@ class Cart {
             productId
         if (e.target.classList.contains('deleteCartProduct')) {
             product = e.target.parentElement.parentElement
+            console.log(product)
             productId = product.querySelector('a').getAttribute('data-id')
             e.target.parentElement.parentElement.remove()
             document.getElementById("CartCount").innerHTML = cartQty - 1
             // lo tuve que ocmentar porque no funciona da error de funcion no definida
             deleteProductLS(productId)
+            this.showTotalAmount()
         }    
     }
 
@@ -63,6 +66,7 @@ class Cart {
                 localStorage.setItem('products', JSON.stringify(productsLS))
             }
         })
+        this.showTotalAmount()
     }
 
     // add product to cart
@@ -73,6 +77,7 @@ class Cart {
             //Enviamos el producto seleccionado para tomar sus datos
             this.obtainProductData(product)
         }
+        this.showTotalAmount()
     }
 
     // read product data
@@ -93,11 +98,7 @@ class Cart {
             }
         })
 
-        if (productsLS === productInfo.id) {
-            
-            //ver como acumulo
-        }
-        else {
+        if (productsLS != productInfo.id) {
             this.AddCart(productInfo)
         }
     }
@@ -120,6 +121,7 @@ class Cart {
         nTableBody.appendChild(row)
         document.getElementById("CartCount").innerHTML = cartQty + 1
         this.saveProductsLocalStorage(product)
+        this.showTotalAmount()
     }
 
     // delete all products in Cart
@@ -131,6 +133,7 @@ class Cart {
         // clear LS
         this.emptyLocalStorage()
         document.getElementById("CartCount").innerHTML = 0
+        document.getElementById("totalCart").innerHTML = 0
         return false
     }
 
@@ -150,7 +153,22 @@ class Cart {
         localStorage.clear()
     }
 
+    calcTotalAmount() {
 
+        let productLS = cart.obtainProductsLocalStorage()
+        let totalAmount = 0;
+    
+        productLS.forEach(function(product,index){
+            totalAmount = totalAmount + product.price * product.qty
+     
+        })
+        return totalAmount
+    }
+
+    showTotalAmount() {
+        const totalAmount = this.calcTotalAmount()
+        document.getElementById("totalCart").innerHTML = totalAmount
+    }
 }
 
 
@@ -175,3 +193,4 @@ function updateProductLS(productId) {
     })
     localStorage.setItem('products',JSON.stringify(productLS))
 }
+

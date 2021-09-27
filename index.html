@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Shop Homepage - Start Bootstrap Template</title>
+        <title>Computers OnLine Sales Homepage</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <script src="https://kit.fontawesome.com/e68b6d5585.js" crossorigin="anonymous"></script>
@@ -15,6 +15,7 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
         <link rel="stylesheet" href="./css/own.css">
+
     </head>
 
     <body>
@@ -29,19 +30,36 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+                                data-bs-toggle="dropdown" aria-expanded="false">Filter Products</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#!" onclick="filterProducts('all')">All Products</a></li>
+                                <li><a class="dropdown-item" href="#!" onclick="filterProducts('all')">All Products</a>
+                                </li>
                                 <li>
                                     <hr class="dropdown-divider" />
                                 </li>
-                                <li><a class="dropdown-item" href="#!" onclick="filterProducts('popular')">Popular Items</a></li>
-                                <li><a class="dropdown-item" href="#!" onclick="filterProducts('new')">New Arrivals</a></li>
+                                <li><a class="dropdown-item" href="#!" onclick="filterProducts('popular')">Popular
+                                        Items</a></li>
+                                <li><a class="dropdown-item" href="#!" onclick="filterProducts('new')">New Arrivals</a>
+                                </li>
+                            </ul>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">Sort Products</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#!" onclick="sortProducts('relevants')">More
+                                        relevants</a></li>
+                                <li>
+                                    <hr class="dropdown-divider" />
+                                </li>
+                                <li><a class="dropdown-item" href="#!" onclick="sortProducts('lower')">Lower price</a>
+                                </li>
+                                <li><a class="dropdown-item" href="#!" onclick="sortProducts('higher')">Higher price</a>
+                                </li>
                             </ul>
                         </li>
+                        <li class="nav-item"><a class="nav-link" href="#!" onclick="paid()">Procees Order</a></li>
                     </ul>
                     <!-- Button trigger modal -->
                     <button type="button" class="btn-outline-dark p-1 rounded " data-bs-toggle="modal"
@@ -52,12 +70,13 @@
                     </button>
 
                     <!-- Modal -->
-                    <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="ModalLabel" 
+                    <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="ModalLabel"
                         aria-hidden="true">
                         <div class="modal-dialog  bd-example-modal-lg modal-dialog-scrollable">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="ModalLabel">Shopping Cart</h5>
+                                    <h5 class="modal-title" id="ModalLabel">SHOPPING CART - Total Amount: <span
+                                            class="badge bg-secondary" id="totalCart">0</span></h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Cerrar"></button>
                                 </div>
@@ -84,7 +103,8 @@
                                     <button type="button" class="btn btn-secondary"
                                         data-bs-dismiss="modal">Close</button>
                                     <button type="button" class="btn btn-danger" id="emptyCart">Empty Cart</button>
-                                    <button type="button" class="btn btn-primary" id="salesProcess">Process</button>
+                                    <button type="button" class="btn btn-primary" id="salesProcess"
+                                        onclick="paid()">Process</button>
                                 </div>
                             </div>
                         </div>
@@ -110,19 +130,19 @@
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" id="allDetailCheck" checked>
                     <label class="form-check-label" for="allDetailCheck">
-                      Show all Products Details
+                        Show all Products Details
                     </label>
-                  </div>
+                </div>
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
                     id="sectionProductsList">
-                    
+
                 </div>
             </div>
         </section>
         <!-- Footer-->
         <footer class="py-5 bg-dark">
             <div class="container">
-                <p class="m-0 text-center text-white">Copyright &copy; Your Website 2021</p>
+                <p class="m-0 text-center text-white">Copyright Computers OnLine Sales 2021</p>
             </div>
         </footer>
         <!-- Bootstrap core JS-->
@@ -132,10 +152,7 @@
         <script src="./js/scripts.js"></script>
         <script src="./js/cart.js"></script>
         <script src="./js/request.js"></script>
-
-        
-
-
+        <script src="./js/checkout.js"></script>
     </body>
 
 </html>

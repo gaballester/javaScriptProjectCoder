@@ -2,21 +2,23 @@
 class Product {
     constructor(productCode, productBranch, productName, productDetail1, productDetail2, productDetail3, productDetail4, productDetail5, productPrice, productStock, productBest, productNew) {
         this.productCode = productCode,
-        this.productBranch = productBranch,
-        this.productName = productName,
-        this.productDetail1 = productDetail1,
-        this.productDetail2 = productDetail2,
-        this.productDetail3 = productDetail3,
-        this.productDetail4 = productDetail4,
-        this.productDetail5 = productDetail5,
-        this.productPrice = productPrice,
-        this.productStock = productStock,
-        this.productBest = productBest,
-        this.productNew = productNew
+            this.productBranch = productBranch,
+            this.productName = productName,
+            this.productDetail1 = productDetail1,
+            this.productDetail2 = productDetail2,
+            this.productDetail3 = productDetail3,
+            this.productDetail4 = productDetail4,
+            this.productDetail5 = productDetail5,
+            this.productPrice = productPrice,
+            this.productStock = productStock,
+            this.productBest = productBest,
+            this.productNew = productNew
     }
 }
 
 var allProducts = []
+var filteredProducts = []
+
 // uso fetch para leer archivo json local
 fetch('/json/products.json', {
     method: 'GET'
@@ -24,26 +26,27 @@ fetch('/json/products.json', {
     .then(response => response.json())
     .then(arrProducts => {
         allProducts = arrProducts.slice(0, arrProducts.length)
-        DisplayHTMLProducts(arrProducts)   
+        filteredProducts = [...allProducts]
+        DisplayHTMLProducts(arrProducts)
     })
 
 
-function DisplayHTMLProducts(arrProducts)    {
+function DisplayHTMLProducts(arrProducts) {
 
     let mostrar = ""
-    let starts  = ""
+    let starts = ""
     let newProd = ""
 
 
     // uso forEach para actualizar el DOM
     arrProducts.forEach(product => {
         starts = ''
-        for (let i = 0; i<5; i++) {
-            if(i < product.starts) {
+        for (let i = 0; i < 5; i++) {
+            if (i < product.starts) {
                 starts += `<div class="bi-star-fill"></div>`
             } else {
                 starts += `<div class="bi-star"></div>`
-            }   
+            }
         }
         if (product.productNew) {
             newProd = `<img src="./img/images.png" alt="New Product">`
@@ -81,7 +84,7 @@ function DisplayHTMLProducts(arrProducts)    {
                         ${starts}
                     </div>
                 <!-- Product price-->
-                <h5><span>u$$${product.productPrice}</span></h5>
+                <h5>U$S<span>${product.productPrice}</span></h5>
                 ${newProd}
             </div>
         </div>
@@ -101,44 +104,40 @@ function DisplayHTMLProducts(arrProducts)    {
     contenedor.innerHTML = mostrar
 }
 
-function filterProducts(param){
-    let result = []
+function filterProducts(param) {
     switch (param) {
-        case 'new':     
-        console.log('entro al new') 
-            result = allProducts.filter(product => product.productNew===true);
+        case 'new':
+            filteredProducts = allProducts.filter(product => product.productNew === true)
             break
-        case 'all':      
-        console.log('entro al all') 
-            result = allProducts;
+        case 'all':
+            filteredProducts = allProducts
             break
         case 'popular':
-            console.log('entro al popular') 
-            result = allProducts.filter(product => product.productBest===true);
+            filteredProducts = allProducts.filter(product => product.productBest === true)
             break
     }
-    console.log(result)
-    DisplayHTMLProducts(result) 
+    DisplayHTMLProducts(filteredProducts)
+    console.log(filteredProducts)
 }
 
 
 $(document).ready(function () {
 
-    $('#allDetailCheck').prop('checked', true);
+    $('#allDetailCheck').prop('checked', true)
 
     $('input[type="checkbox"]').click(function () {
         if ($(this).prop("checked") == true) {
-            $(".moreDetails").show();
+            $(".moreDetails").show()
         }
         else if ($(this).prop("checked") == false) {
-            $(".moreDetails").hide();
+            $(".moreDetails").hide()
         }
     });
 
     let titulo = $('.fw-bolder')
 
-    $(".title1").hide();
-    $(".title2").hide();
+    $(".title1").hide()
+    $(".title2").hide()
     $(".title1").slideDown(2000, function () {
         $(".title2").fadeIn(3000, function () {
             $(".title2").animate({
@@ -150,8 +149,81 @@ $(document).ready(function () {
                 .animate({
                     marginLeft: '0px'
                 }, 2000)
-        });  
-    });
-   
-});
+        })
+    })
 
+})
+
+function sortProducts(sortType) {
+    console.log(filteredProducts)
+    var arrProductsSorted = [...filteredProducts]
+
+    switch (sortType) {
+        case 'relevants':
+            
+            arrProductsSorted.sort((a, b) => {
+                if (a.productBest < b.productBest) {
+                    return 1
+                }
+                if (a.productBest > b.productBest) {
+                    return -1
+                }
+                return 0
+            })
+            break
+        case 'lower':
+            arrProductsSorted.sort( (a, b) => {
+                if(a.productPrice == b.productPrice) {
+                  return 0
+                }
+                if(a.productPrice < b.productPrice) {
+                  return -1
+                }
+                return 1
+              });
+            break
+        case 'higher':
+            arrProductsSorted.sort( (a, b) => {
+                if(a.productPrice == b.productPrice) {
+                  return 0
+                }
+                if(a.productPrice > b.productPrice) {
+                  return -1
+                }
+                return 1
+              });
+            break
+        breack
+    }
+    DisplayHTMLProducts(arrProductsSorted)
+}
+
+
+function paid() {
+
+    // information to send
+    const elemento = {
+        "items": [
+            {
+                "title": "Dummy Title",
+                "description": "Dummy description",
+                "picture_url": "http://www.myapp.com/myimage.jpg",
+                "category_id": "cat123",
+                "quantity": 1,
+                "currency_id": "ARS",
+                "unit_price": 10
+            }
+        ]
+    }
+
+
+    fetch("https://api.mercadopago.com/checkout/preferences", {
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        headers: {
+            'Authorization': ' Bearer TEST-6222537316144723-092602-33b5268ef0daeaafdba14d18e2bf82d2-20746333',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(elemento)
+    });
+
+}

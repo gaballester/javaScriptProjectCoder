@@ -10,7 +10,7 @@
     "productPrice":699,
     "productStock":10,
     "productBest":false,
-    "productNew":true,
+    "productNew":false,
     "starts":3
     },{
     "productCode":2,
@@ -37,7 +37,7 @@
     "productDetail5":"SD/MMC CReader,USB C|USB A|HDIRWebcam",
     "productPrice":1099,
     "productStock":7,
-    "productBest":false,
+    "productBest":true,
     "productNew":false,
     "starts":5
     },{   
@@ -51,7 +51,7 @@
     "productDetail5":"SD/MMC CReader,USB C|USB A|HDMI 2- Wi-Fi 6",
     "productPrice":1149,
     "productStock":19,
-    "productBest":true,
+    "productBest":false,
     "productNew":false,
     "starts":4  
     },{
@@ -79,7 +79,7 @@
     "productDetail5":"Wi-Fi 6 (802.11ax) | Bluetooth 5.0",
     "productPrice":1699,
     "productStock":10,
-    "productBest":false,
+    "productBest":true,
     "productNew":false,
     "starts":5                 
     },{
@@ -95,7 +95,7 @@
     "productStock":5,
     "productBest":false,
     "productNew":false,
-    "starts":5                 
+    "starts":4                 
     },{
     "productCode":8,
     "productBranch":"MSI",
